@@ -1,7 +1,5 @@
 <template>
-    <div class='item-wrapper'>
-        <a href='#' :class="['link', {'chosen': chosen}]" @click.prevent='chooseItem'>{{ name }}</a>
-    </div>
+    <a href='#' class="sub-item link" @click.prevent='$emit("chooseItem")'>{{ name }}</a>
 </template>
 <script>
 export default {
@@ -10,16 +8,6 @@ export default {
         name: {
             type:  String,
             required: true,
-        },
-    },
-    data() {
-        return {
-            chosen: false,
-        }
-    },
-    methods: {
-        chooseItem() {
-            this.chosen = !this.chosen;
         },
     },
 };

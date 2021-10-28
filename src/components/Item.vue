@@ -1,25 +1,31 @@
 <template>
     <li>
-        <Link 
-            v-if="item.type === 'link'"
-            :name='item.name'
-        />
-        <File
-            v-else-if="item.type === 'file'"
-            :name="item.name"
-        />
-        <Folder 
-            v-else
-            :name='item.name'
-            @toggleFolder='toggleFolder'
-        />
-
+        <div class='item-wrapper'>
+            <Link 
+                v-if="item.type === 'link'"
+                :name='item.name'
+                :class='{"chosen": chosen}'
+                @chooseItem='chooseItem'
+            />
+            <File
+                v-else-if="item.type === 'file'"
+                :name="item.name"
+                :class='{"chosen": chosen}'
+                @chooseItem='chooseItem'
+            />
+            <Folder 
+                v-else
+                :name='item.name'
+                @toggleFolder='toggleFolder'
+            />
+            <b class='path' v-if='opened || chosen'>{{path}}</b>
+        </div>
         <ul v-if="opened && item.contents && item.contents.length">
             <Item 
                 v-for="(child, subIndex) in item.contents" 
+                :key="subIndex" 
                 :item="child"
-                :key="subIndex"
-                :parentItem="item.name"  
+                :path="path + '/' + child.name" 
             />
         </ul>
     </li>
@@ -42,23 +48,25 @@ export default {
             type: Object,
             required: true
         },
-        index: {
-            type: Number,
-            required: false
-        },
-        parentItem: {
-            required: false,
-            default: '',
-        },
+        path: {
+            type: String,
+            required: true,
+        }
     },
     data() {
         return {
+            // открыта ли папка
             opened: false,
+            // выбран ли файл или ссылка
+            chosen: false,
         }
     },
     methods: {
         toggleFolder() {
             this.opened = !this.opened;
+        },
+        chooseItem() {
+            this.chosen = !this.chosen;
         },
     },
 };

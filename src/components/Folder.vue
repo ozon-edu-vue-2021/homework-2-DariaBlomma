@@ -1,10 +1,5 @@
 <template>
-    <span 
-        class="directory" 
-        @click='$emit("toggleFolder")'
-    >
-    {{ name }}
-    </span>
+    <span class="sub-item directory" @click='$emit("toggleFolder")'>{{ name }}</span>
 </template>
 <script>
 export default {
