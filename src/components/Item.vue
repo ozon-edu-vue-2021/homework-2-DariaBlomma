@@ -22,10 +22,10 @@
         </div>
         <ul v-if="opened && item.contents && item.contents.length">
             <Item 
-                v-for="(child, subIndex) in item.contents" 
-                :key="subIndex" 
+                v-for="child in item.contents" 
+                :key="getPath(child)" 
                 :item="child"
-                :path="path + '/' + child.name" 
+                :path="getPath(child)" 
             />
         </ul>
     </li>
@@ -68,6 +68,9 @@ export default {
         chooseItem() {
             this.chosen = !this.chosen;
         },
+        getPath(child) {
+            return this.path + '/'  + child.name;
+        }
     },
 };
 </script>
